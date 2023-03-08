@@ -19,34 +19,36 @@ struct ContentView: View {
     
     @ViewBuilder
     private func renderMain() -> some View {
-        NavigationView { // Required for bug
-            VStack {
-                Button {
-                    didStep1 = true
-                } label: {
-                    Text("(1) Tap me. I'm tappable!")
-                        .padding()
-                        .background(Color.yellow)
-                }
-                if !didStep2 {
-                    Button("(2) Move to the right") {
-                        withAnimation {
-                            offsetX = 100
-                        }
-                        didStep2 = true
+        VStack {
+            NavigationView { // Required for bug
+                VStack {
+                    Button {
+                        didStep1 = true
+                    } label: {
+                        Text("(1) Tap me. I'm tappable!")
+                            .padding()
+                            .background(Color.yellow)
                     }
-                    .foregroundColor(.red)
-                    .padding()
-                } else {
-                    Text("(3) Hit area messed up!\nNow you can tap on the left\nof the button above!")
+                    if !didStep2 {
+                        Button("(2) Move to the right") {
+                            withAnimation {
+                                offsetX = 100
+                            }
+                            didStep2 = true
+                        }
+                        .foregroundColor(.red)
+                        .padding()
+                    } else {
+                        Text("(3) Hit area messed up!\nNow you can tap on the left\nof the button above!")
+                    }
                 }
+                .navigationViewStyle(.stack)
             }
-            .navigationViewStyle(.stack)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(20)  // Required for bug
-        .background(.blue)
         .offset(x: offsetX, y: offsetY)
+        .background(.blue)
     }
 }
 
